@@ -1,0 +1,307 @@
+export const WHATSAPP = "2348165078755";
+
+const wa = (name, price) =>
+  `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
+    `Hi Ulcare! I'd like to order the *${name}* (₦${price.toLocaleString()}). Please let me know how to proceed. 🙏`
+  )}`;
+
+export const products = [
+  {
+    id: 1,
+    name: "Premium Logo & Business Branding Kit",
+    category: "Branding",
+    color: "#1A3828",
+    price: 20000,
+    originalPrice: 30000,
+    rating: 4.9,
+    reviewCount: 47,
+    badge: "Bestseller",
+    badgeColor: "amber",
+    shortDesc:
+      "Logo, business cards, letterhead — built to look elite and trustworthy.",
+    description:
+      "Get a world-class visual identity for your business. A professional logo, high-impact business cards, and official letterhead — designed to make your brand look elite and completely trustworthy to your clients.",
+    details: [
+      "Custom logo design (up to 3 unique concepts)",
+      "Business card design (front & back, print-ready)",
+      "Company letterhead (A4 — print & digital)",
+      "Professional email signature",
+      "Brand colour palette & typography guide",
+      "High-resolution exports: PNG, PDF, SVG, JPG",
+      "Unlimited revisions until you're 100% satisfied",
+      "Delivered to your WhatsApp within 48–72 hours",
+    ],
+    whatsInside: [
+      { title: "Custom logo design", desc: "3 concepts, your favourite refined to perfection." },
+      { title: "Business cards", desc: "Front and back designs, print-ready files." },
+      { title: "Letterhead", desc: "Official document template for proposals." },
+      { title: "Brand colours & fonts", desc: "A simple guide so your brand stays consistent." },
+      { title: "Social media kit", desc: "WhatsApp DP, IG covers, and post templates." },
+      { title: "All editable files", desc: "PNG, JPG, PDF and source files included." },
+    ],
+    packages: [
+      { name: "Standard", description: "Logo + 1 revision", price: 20000 },
+      { name: "Premium", description: "Logo + cards + unlimited", price: 35000 },
+    ],
+    steps: [
+      { n: "01", title: "Pay securely", desc: "Card, bank transfer, or USSD." },
+      { n: "02", title: "Share your brief", desc: "Quick form. No jargon, plain English." },
+      { n: "03", title: "We design", desc: "Concepts ready in 48 hours." },
+      { n: "04", title: "Receive files", desc: "All assets sent via WhatsApp & email." },
+    ],
+    images: [
+      "/products/product_1_1.jpg",
+      "/products/product_1_2.jpg",
+      "/products/product_1_3.png",
+    ],
+    type: "service",
+    whatsappLink: wa("Premium Logo & Business Branding Kit", 20000),
+  },
+  {
+    id: 2,
+    name: "CV & Profile Package",
+    category: "CV & Profile",
+    color: "#EDE9E0",
+    price: 15000,
+    originalPrice: null,
+    rating: 4.8,
+    reviewCount: 23,
+    badge: null,
+    badgeColor: null,
+    shortDesc:
+      "Precision-engineered CV remodeling and cover letter for industry leaders.",
+    description:
+      "Your CV is your first impression — and it either opens doors or gets ignored. We rebuild your CV from scratch, crafting a document that positions you as the top candidate in any room. Optimised for both human recruiters and ATS screening systems.",
+    details: [
+      "Complete CV redesign & content rewrite",
+      "Tailored cover letter (industry-specific)",
+      "LinkedIn profile optimisation tips",
+      "ATS-friendly format (passes screening software)",
+      "Modern, recruiter-approved layout",
+      "PDF & Word formats included",
+      "1 round of revisions included",
+      "Delivered within 24–48 hours",
+    ],
+    whatsInside: [
+      { title: "Complete CV redesign", desc: "Rebuilt from scratch, tailored to your industry." },
+      { title: "Cover letter", desc: "Crafted to position you as the top candidate." },
+      { title: "ATS optimisation", desc: "Passes screening software every time." },
+      { title: "LinkedIn tips", desc: "Make your profile impossible to ignore." },
+      { title: "PDF & Word formats", desc: "Two formats ready for any application." },
+      { title: "1 revision round", desc: "We fine-tune until you're fully satisfied." },
+    ],
+    packages: null,
+    steps: [
+      { n: "01", title: "Pay securely", desc: "Card, bank transfer, or USSD." },
+      { n: "02", title: "Share your brief", desc: "Quick form. No jargon, plain English." },
+      { n: "03", title: "We design", desc: "Your new CV ready in 24–48 hours." },
+      { n: "04", title: "Receive files", desc: "PDF & Word delivered via WhatsApp & email." },
+    ],
+    images: [
+      "/products/product_2_1.jpg",
+      "/products/product_2_2.jpg",
+      "/products/product_2_3.jpg",
+    ],
+    type: "service",
+    whatsappLink: wa("CV & Profile Package", 15000),
+  },
+  {
+    id: 3,
+    name: "Business Flyer Design",
+    category: "Flyers",
+    color: "#F0B429",
+    price: 10000,
+    originalPrice: null,
+    rating: 4.7,
+    reviewCount: 31,
+    badge: null,
+    badgeColor: null,
+    shortDesc:
+      "Sharp promotional designs that turn viewers into customers.",
+    description:
+      "In a world of endless scrolling, your flyer has 3 seconds to stop someone in their tracks. We design high-impact visuals that communicate your offer clearly, look stunning in print and online, and drive real action from real people.",
+    details: [
+      "Custom flyer design (A4 or A5 format)",
+      "Social media version (Instagram & WhatsApp optimised)",
+      "High-resolution print-ready files",
+      "Branded colours using your existing brand kit",
+      "Up to 2 design concepts to choose from",
+      "PNG, PDF & JPG exports",
+      "1 round of revisions",
+      "Delivered within 24 hours",
+    ],
+    whatsInside: [
+      { title: "Custom flyer design", desc: "A4 or A5 format, built around your brand." },
+      { title: "Social media version", desc: "Instagram & WhatsApp optimised sizes." },
+      { title: "Print-ready files", desc: "High-resolution, ready for any print shop." },
+      { title: "Branded colours", desc: "Consistent with your existing brand kit." },
+      { title: "2 design concepts", desc: "Pick your favourite or combine elements." },
+      { title: "PNG, PDF & JPG", desc: "All formats included for every use case." },
+    ],
+    packages: null,
+    steps: [
+      { n: "01", title: "Pay securely", desc: "Card, bank transfer, or USSD." },
+      { n: "02", title: "Share your brief", desc: "Tell us your offer and brand details." },
+      { n: "03", title: "We design", desc: "Your flyer ready in 24 hours." },
+      { n: "04", title: "Receive files", desc: "All formats sent via WhatsApp & email." },
+    ],
+    images: [
+      "/products/product_3_1.jpg",
+      "/products/product_3_2.jpg",
+      "/products/product_3_3.jpg",
+    ],
+    type: "service",
+    whatsappLink: wa("Business Flyer Design", 10000),
+  },
+  {
+    id: 4,
+    name: "Startup Vault",
+    category: "Templates",
+    color: "#1A3828",
+    price: 5000,
+    originalPrice: null,
+    rating: 4.9,
+    reviewCount: 58,
+    badge: "Instant Download",
+    badgeColor: "green",
+    shortDesc:
+      "Invoices, receipts and admin forms ready in 60 seconds — no skills needed.",
+    description:
+      "Stop sending clients plain messages as invoices. This vault gives you polished, professional templates that make your business look established from day one. Fully editable in Microsoft Word or Google Docs — no design skills needed.",
+    details: [
+      "Professional invoice template (fully editable)",
+      "Payment receipt template",
+      "Business proposal template",
+      "Service agreement / contract template",
+      "Quotation & price list template",
+      "Works in Microsoft Word & Google Docs",
+      "Easy to customise with your logo & details",
+      "Instant delivery to your WhatsApp or email",
+    ],
+    whatsInside: [
+      { title: "Invoice template", desc: "Professional, fully editable in Word or Google Docs." },
+      { title: "Payment receipt", desc: "Official-looking and client-ready." },
+      { title: "Business proposal", desc: "Structure that wins deals." },
+      { title: "Service agreement", desc: "Protect your work with a clear contract." },
+      { title: "Quotation template", desc: "Price list format that looks credible." },
+      { title: "Instant delivery", desc: "All files sent immediately after payment." },
+    ],
+    packages: null,
+    steps: [
+      { n: "01", title: "Pay securely", desc: "Card, bank transfer, or USSD." },
+      { n: "02", title: "Instant delivery", desc: "Files sent to your WhatsApp or email immediately." },
+      { n: "03", title: "Fill your details", desc: "Add your business info using Word or Google Docs." },
+      { n: "04", title: "Done!", desc: "Your professional documents are ready to use." },
+    ],
+    images: [
+      "/products/product_4_1.jpg",
+      "/products/product_4_2.jpg",
+      "/products/product_4_3.jpg",
+    ],
+    type: "download",
+    whatsappLink: wa("Startup Vault", 5000),
+  },
+  {
+    id: 5,
+    name: "Ops Spreadsheet",
+    category: "Templates",
+    color: "#EDE9E0",
+    price: 7500,
+    originalPrice: null,
+    rating: 4.6,
+    reviewCount: 15,
+    badge: "Instant Download",
+    badgeColor: "green",
+    shortDesc:
+      "Automated bookkeeping and sales tracking — no skills needed.",
+    description:
+      "Run your finances like a CFO without hiring one. This automated spreadsheet handles your bookkeeping, generates visual charts, and keeps you in full control of your business numbers — all without needing any accounting qualification. Built specifically for Nigerian SMEs.",
+    details: [
+      "Automated income & expense tracker",
+      "Sales pipeline dashboard",
+      "Visual charts & monthly reports (auto-generated)",
+      "Inventory tracking sheet",
+      "Profit & loss summary (updates automatically)",
+      "Compatible with Microsoft Excel & Google Sheets",
+      "Step-by-step setup guide included",
+      "Instant delivery — download immediately after payment",
+    ],
+    whatsInside: [
+      { title: "Income & expense tracker", desc: "Automated calculations — no manual math." },
+      { title: "Sales pipeline dashboard", desc: "See your deals at a glance." },
+      { title: "Visual charts", desc: "Monthly reports generated automatically." },
+      { title: "Inventory tracking", desc: "Know your stock without spreadsheet skills." },
+      { title: "P&L summary", desc: "Profit and loss updated live as you enter data." },
+      { title: "Setup guide", desc: "Step-by-step instructions included." },
+    ],
+    packages: null,
+    steps: [
+      { n: "01", title: "Pay securely", desc: "Card, bank transfer, or USSD." },
+      { n: "02", title: "Instant delivery", desc: "Files sent to your WhatsApp or email immediately." },
+      { n: "03", title: "Open and fill", desc: "Works in Microsoft Excel or Google Sheets." },
+      { n: "04", title: "Done!", desc: "Your business finances are now organised." },
+    ],
+    images: [],
+    type: "download",
+    whatsappLink: wa("Ops Spreadsheet", 7500),
+  },
+];
+
+export const portfolio = [
+  {
+    id: 1,
+    image: "/portfolio/photo_1.jpg",
+    title: "Corporate Letterhead",
+    category: "Document Design",
+    color: "#1A3828",
+  },
+  {
+    id: 2,
+    image: "/portfolio/photo_2.jpg",
+    title: "Brand Identity System",
+    category: "Logo Design",
+    color: "#EDE9E0",
+  },
+  {
+    id: 3,
+    image: "/portfolio/photo_3.jpg",
+    title: "Business Branding",
+    category: "Corporate Branding",
+    color: "#F0B429",
+  },
+  {
+    id: 4,
+    image: "/portfolio/photo_4.jpg",
+    title: "Event Promotional Flyer",
+    category: "Flyer Design",
+    color: "#1A3828",
+  },
+];
+
+export const testimonials = [
+  {
+    id: 1,
+    text: "Absolutely loved the result. The logo looks expensive and my business cards turned heads at my last meeting.",
+    shortText: "Absolutely loved the result.",
+    author: "Asunmo E.",
+    initials: "AE",
+    role: "Business Owner",
+    timeAgo: "2 weeks ago",
+  },
+  {
+    id: 2,
+    text: "Delivered on time and exceeded my expectations. Communication was easy on WhatsApp, no confusing back-and-forth.",
+    shortText: "Delivered on time and exceeded my expectations.",
+    author: "Ogbonnaya S.",
+    initials: "OS",
+    role: "Corporate Professional",
+    timeAgo: "1 month ago",
+  },
+];
+
+export const siteContact = {
+  email: "ulcare.enterprise@gmail.com",
+  whatsapp: WHATSAPP,
+  address:
+    "Shop 4, Power Encounter Junction, East/West Road, Rumuodara, Port-Harcourt, Rivers State.",
+};
