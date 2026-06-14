@@ -142,17 +142,6 @@ export default function ProductPurchase({ product }) {
           href={waLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-body flex items-center justify-center gap-2 border border-[#1A3828] text-[#1A3828] font-semibold text-sm px-6 py-4 hover:bg-[#1A3828]/5 transition-all duration-200 w-full"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-          </svg>
-          Add to cart
-        </a>
-        <a
-          href={waLink}
-          target="_blank"
-          rel="noopener noreferrer"
           className="font-body flex items-center justify-center gap-2.5 bg-[#22C55E] text-white font-semibold text-sm px-6 py-4 hover:bg-[#16A34A] transition-colors duration-200 w-full"
         >
           {WA_ICON}

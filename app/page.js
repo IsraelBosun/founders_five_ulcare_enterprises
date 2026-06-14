@@ -5,6 +5,7 @@ import Hero from "./components/Hero";
 import Testimonials from "./components/Testimonials";
 import Footer from "./components/Footer";
 import WhatsAppButton from "./components/WhatsAppButton";
+import Reveal from "./components/Reveal";
 import { products, portfolio, WHATSAPP } from "./data/site";
 
 const WA_ICON = (
@@ -47,31 +48,34 @@ function WhatWeDo() {
   return (
     <section className="bg-[#F7F5F0] py-20 sm:py-28">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="font-body text-[11px] font-medium tracking-[0.22em] uppercase text-[#A09B93] mb-4">
-          What We Do
-        </div>
-        <h2 className="font-body font-bold text-[#1A1A12] text-3xl sm:text-4xl mb-3">
-          Everything your brand needs.
-        </h2>
-        <p className="font-body text-[#706D66] text-base mb-12">
-          Pick a service. We make it elite.
-        </p>
+        <Reveal>
+          <div className="font-body text-[11px] font-medium tracking-[0.22em] uppercase text-[#A09B93] mb-4">
+            What We Do
+          </div>
+          <h2 className="font-body font-bold text-[#1A1A12] text-3xl sm:text-4xl mb-3">
+            Everything your brand needs.
+          </h2>
+          <p className="font-body text-[#706D66] text-base mb-12">
+            Pick a service. We make it elite.
+          </p>
+        </Reveal>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {whatWeDoServices.map((svc) => (
-            <Link
-              key={svc.name}
-              href="/products"
-              className="group bg-white border border-[#E0DDD5] hover:border-[#1A3828]/30 p-5 transition-all duration-200 flex flex-col gap-4"
-            >
-              <div className="w-10 h-10 bg-[#1A3828] flex items-center justify-center rounded-sm group-hover:bg-[#24503A] transition-colors duration-200">
-                {serviceIcons[svc.name]}
-              </div>
-              <div>
-                <div className="font-body font-semibold text-[#1A1A12] text-sm mb-1">{svc.name}</div>
-                <div className="font-body text-[#A09B93] text-xs">{svc.desc}</div>
-              </div>
-            </Link>
+          {whatWeDoServices.map((svc, i) => (
+            <Reveal key={svc.name} delay={i * 80}>
+              <Link
+                href="/products"
+                className="group bg-white border border-[#E0DDD5] hover:border-[#1A3828]/30 p-5 transition-all duration-200 flex flex-col gap-4 h-full"
+              >
+                <div className="w-10 h-10 bg-[#1A3828] flex items-center justify-center rounded-sm group-hover:bg-[#24503A] transition-colors duration-200">
+                  {serviceIcons[svc.name]}
+                </div>
+                <div>
+                  <div className="font-body font-semibold text-[#1A1A12] text-sm mb-1">{svc.name}</div>
+                  <div className="font-body text-[#A09B93] text-xs">{svc.desc}</div>
+                </div>
+              </Link>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -88,35 +92,37 @@ function AssetVault() {
   return (
     <section className="bg-white py-20 sm:py-28 border-t border-[#E0DDD5]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
-          <div>
-            <div className="font-body text-[11px] font-medium tracking-[0.22em] uppercase text-[#A09B93] mb-4">
-              The Asset Vault
+        <Reveal>
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
+            <div>
+              <div className="font-body text-[11px] font-medium tracking-[0.22em] uppercase text-[#A09B93] mb-4">
+                The Asset Vault
+              </div>
+              <h2 className="font-body font-bold text-[#1A1A12] text-3xl sm:text-4xl mb-2">
+                Buy. Download. Done.
+              </h2>
+              <p className="font-body text-[#706D66] text-sm">
+                Premium templates ready in under 60 seconds.
+              </p>
             </div>
-            <h2 className="font-body font-bold text-[#1A1A12] text-3xl sm:text-4xl mb-2">
-              Buy. Download. Done.
-            </h2>
-            <p className="font-body text-[#706D66] text-sm">
-              Premium templates ready in under 60 seconds.
-            </p>
+            <Link
+              href="/products"
+              className="font-body self-start sm:self-auto inline-flex items-center gap-2 text-sm font-medium text-[#706D66] border border-[#E0DDD5] px-5 py-2.5 hover:border-[#1A3828] hover:text-[#1A3828] transition-all duration-200"
+            >
+              View all
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
           </div>
-          <Link
-            href="/products"
-            className="font-body self-start sm:self-auto inline-flex items-center gap-2 text-sm font-medium text-[#706D66] border border-[#E0DDD5] px-5 py-2.5 hover:border-[#1A3828] hover:text-[#1A3828] transition-all duration-200"
-          >
-            View all
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
-            </svg>
-          </Link>
-        </div>
+        </Reveal>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {products.map((product) => (
+          {products.map((product, i) => (
+            <Reveal key={product.id} delay={i * 70}>
             <Link
-              key={product.id}
               href={`/products/${product.id}`}
-              className="group block border border-[#E0DDD5] hover:border-[#1A3828]/25 bg-white transition-all duration-200"
+              className="group block border border-[#E0DDD5] hover:border-[#1A3828]/25 bg-white transition-all duration-200 h-full"
             >
               <div className="relative overflow-hidden bg-[#111111]" style={{ height: 160 }}>
                 {product.images[0] ? (
@@ -165,28 +171,31 @@ function AssetVault() {
                 </div>
               </div>
             </Link>
+            </Reveal>
           ))}
 
           {/* Need custom? card */}
-          <a
-            href={customLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group border border-[#E0DDD5] hover:border-[#F0B429]/50 bg-[#F0B429]/8 transition-all duration-200 flex flex-col items-start justify-center p-8 gap-3 min-h-[220px]"
-          >
-            <div className="font-body font-bold text-[#1A1A12] text-lg leading-snug">
-              Need custom?
-            </div>
-            <p className="font-body text-[#706D66] text-sm leading-relaxed">
-              Tell us what you want. We&rsquo;ll build it.
-            </p>
-            <span className="font-body text-sm font-semibold text-[#1A3828] flex items-center gap-1.5 group-hover:gap-2.5 transition-all duration-200">
-              Start a project
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </span>
-          </a>
+          <Reveal delay={products.length * 70}>
+            <a
+              href={customLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group border border-[#E0DDD5] hover:border-[#F0B429]/50 bg-[#F0B429]/8 transition-all duration-200 flex flex-col items-start justify-center p-8 gap-3 min-h-[220px] h-full"
+            >
+              <div className="font-body font-bold text-[#1A1A12] text-lg leading-snug">
+                Need custom?
+              </div>
+              <p className="font-body text-[#706D66] text-sm leading-relaxed">
+                Tell us what you want. We&rsquo;ll build it.
+              </p>
+              <span className="font-body text-sm font-semibold text-[#1A3828] flex items-center gap-1.5 group-hover:gap-2.5 transition-all duration-200">
+                Start a project
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </span>
+            </a>
+          </Reveal>
         </div>
       </div>
     </section>
@@ -197,39 +206,41 @@ function Portfolio() {
   return (
     <section className="bg-[#F7F5F0] py-20 sm:py-28 border-t border-[#E0DDD5]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
-          <div>
-            <div className="font-body text-[11px] font-medium tracking-[0.22em] uppercase text-[#A09B93] mb-4">
-              Portfolio
+        <Reveal>
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
+            <div>
+              <div className="font-body text-[11px] font-medium tracking-[0.22em] uppercase text-[#A09B93] mb-4">
+                Portfolio
+              </div>
+              <h2 className="font-body font-bold text-[#1A1A12] text-3xl sm:text-4xl">
+                A look at our work.
+              </h2>
             </div>
-            <h2 className="font-body font-bold text-[#1A1A12] text-3xl sm:text-4xl">
-              A look at our work.
-            </h2>
+            <Link
+              href="/portfolio"
+              className="font-body self-start sm:self-auto inline-flex items-center gap-2 text-sm font-medium text-[#706D66] border border-[#E0DDD5] px-5 py-2.5 hover:border-[#1A3828] hover:text-[#1A3828] transition-all duration-200"
+            >
+              See full portfolio
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
           </div>
-          <Link
-            href="/portfolio"
-            className="font-body self-start sm:self-auto inline-flex items-center gap-2 text-sm font-medium text-[#706D66] border border-[#E0DDD5] px-5 py-2.5 hover:border-[#1A3828] hover:text-[#1A3828] transition-all duration-200"
-          >
-            See full portfolio
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
-            </svg>
-          </Link>
-        </div>
+        </Reveal>
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-1.5">
-          <div className="md:row-span-2 relative overflow-hidden bg-[#111111]" style={{ minHeight: 260 }}>
+          <Reveal className="md:row-span-2 relative overflow-hidden bg-[#111111]" style={{ minHeight: 260 }}>
             <Image src={portfolio[0].image} alt={portfolio[0].title} fill className="object-contain p-5" sizes="(max-width: 768px) 50vw, 33vw" />
-          </div>
-          <div className="relative overflow-hidden bg-[#111111]" style={{ minHeight: 180 }}>
+          </Reveal>
+          <Reveal className="relative overflow-hidden bg-[#111111]" delay={80} style={{ minHeight: 180 }}>
             <Image src={portfolio[1].image} alt={portfolio[1].title} fill className="object-contain p-5" sizes="(max-width: 768px) 50vw, 33vw" />
-          </div>
-          <div className="relative overflow-hidden bg-[#111111]" style={{ minHeight: 180 }}>
+          </Reveal>
+          <Reveal className="relative overflow-hidden bg-[#111111]" delay={160} style={{ minHeight: 180 }}>
             <Image src={portfolio[3].image} alt={portfolio[3].title} fill className="object-contain p-5" sizes="(max-width: 768px) 50vw, 33vw" />
-          </div>
-          <div className="col-span-2 relative overflow-hidden bg-[#111111]" style={{ minHeight: 200 }}>
+          </Reveal>
+          <Reveal className="col-span-2 relative overflow-hidden bg-[#111111]" delay={120} style={{ minHeight: 200 }}>
             <Image src={portfolio[2].image} alt={portfolio[2].title} fill className="object-contain p-5" sizes="(max-width: 768px) 100vw, 66vw" />
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>
@@ -245,15 +256,16 @@ function CustomCTA() {
     <section className="bg-[#1A3828] py-16 sm:py-20">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-          <div>
+          <Reveal>
             <h2 className="font-body font-bold text-white text-3xl sm:text-4xl mb-4">
               Want something custom?
             </h2>
             <p className="font-body text-[#7AAF95] text-base leading-relaxed">
               Tell us your idea on WhatsApp. We&rsquo;ll reply in minutes with a clear quote — no jargon.
             </p>
-          </div>
+          </Reveal>
 
+          <Reveal delay={150}>
           <div className="flex flex-col sm:flex-row gap-3">
             <a
               href={waLink}
@@ -273,6 +285,7 @@ function CustomCTA() {
               Send email
             </a>
           </div>
+          </Reveal>
         </div>
 
       </div>

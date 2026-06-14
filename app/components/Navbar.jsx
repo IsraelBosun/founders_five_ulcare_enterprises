@@ -80,18 +80,7 @@ export default function Navbar({ dark = false }) {
 
           {/* Right actions */}
           <div className="flex items-center gap-3">
-            <button
-              aria-label="Cart"
-              className={`hidden md:flex items-center justify-center w-8 h-8 transition-colors duration-200 ${
-                onDark ? "text-white/60 hover:text-white" : "text-[#706D66] hover:text-[#1A1A12]"
-              }`}
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-              </svg>
-            </button>
-
-            <Link
+<Link
               href="/products"
               className="hidden md:inline-flex items-center font-body text-sm font-semibold px-5 py-2 bg-[#1A3828] text-white hover:bg-[#24503A] transition-colors duration-200"
             >
