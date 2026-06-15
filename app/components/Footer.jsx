@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { siteContact, WHATSAPP } from "../data/site";
 
 const shopLinks = [
@@ -21,14 +22,15 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-14">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1 space-y-4">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-[#F0B429] flex items-center justify-center rounded-sm">
-                <span className="font-body font-bold text-[#1A1A12] text-sm leading-none">U</span>
-              </div>
-              <span className="font-body font-semibold text-white text-[15px] leading-none">
-                Ulcare Enterprise
-              </span>
-            </div>
+            <Link href="/" className="inline-block">
+              <Image
+                src="/ulcare_logo.png"
+                alt="Ulcare Enterprise"
+                width={160}
+                height={58}
+                className="h-12 w-auto block brightness-0 invert"
+              />
+            </Link>
             <p className="font-body text-[#4A7A60] text-sm leading-relaxed max-w-[220px]">
               Elite branding and corporate documentation, made simple.
             </p>
