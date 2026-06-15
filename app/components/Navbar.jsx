@@ -29,28 +29,18 @@ export default function Navbar({ dark = false }) {
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
 
-  const onDark = dark && !scrolled;
-
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? "bg-white/97 backdrop-blur-sm border-b border-[#E0DDD5] py-3.5"
-            : onDark
-            ? "bg-transparent py-4"
-            : "bg-white/90 backdrop-blur-sm border-b border-[#E0DDD5]/50 py-4"
-        }`}
-      >
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-[#E0DDD5] transition-shadow duration-300 py-2 md:py-3">
         <nav className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between gap-4">
           {/* Logo */}
           <Link href="/" className="flex-shrink-0 select-none leading-none">
             <Image
               src="/ulcare_logo.png"
               alt="Ulcare Enterprise"
-              width={240}
-              height={80}
-              className="h-20 w-auto block m-0 p-0 border-0"
+              width={200}
+              height={72}
+              className="h-14 md:h-20 w-auto block"
               priority
             />
           </Link>
@@ -64,11 +54,7 @@ export default function Navbar({ dark = false }) {
                   key={link.label}
                   href={link.href}
                   className={`font-body text-sm font-medium transition-colors duration-200 ${
-                    active
-                      ? onDark ? "text-white" : "text-[#1A1A12]"
-                      : onDark
-                      ? "text-white/60 hover:text-white"
-                      : "text-[#706D66] hover:text-[#1A1A12]"
+                    active ? "text-[#1A1A12]" : "text-[#706D66] hover:text-[#1A1A12]"
                   }`}
                 >
                   {link.label}
@@ -79,7 +65,7 @@ export default function Navbar({ dark = false }) {
 
           {/* Right actions */}
           <div className="flex items-center gap-3">
-<Link
+            <Link
               href="/products"
               className="hidden md:inline-flex items-center font-body text-sm font-semibold px-5 py-2 bg-[#1A3828] text-white hover:bg-[#24503A] transition-colors duration-200"
             >
@@ -90,9 +76,9 @@ export default function Navbar({ dark = false }) {
             <button
               onClick={() => setMenuOpen(true)}
               aria-label="Open menu"
-              className={`md:hidden flex flex-col justify-center gap-[5px] w-9 h-9 p-2 transition-colors duration-200 ${
-                onDark ? "text-white" : "text-[#1A1A12]"
-              } ${menuOpen ? "opacity-0 pointer-events-none" : ""}`}
+              className={`md:hidden flex flex-col justify-center gap-[5px] w-9 h-9 p-2 text-[#1A1A12] transition-colors duration-200 ${
+                menuOpen ? "opacity-0 pointer-events-none" : ""
+              }`}
             >
               <span className="block h-[1.5px] bg-current" />
               <span className="block h-[1.5px] bg-current" />
