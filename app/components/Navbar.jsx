@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 const navLinks = [
@@ -43,17 +44,15 @@ export default function Navbar({ dark = false }) {
       >
         <nav className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between gap-4">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 flex-shrink-0 select-none">
-            <div className="w-8 h-8 bg-[#1A3828] flex items-center justify-center rounded-sm">
-              <span className="font-body font-bold text-white text-sm leading-none">U</span>
-            </div>
-            <span
-              className={`font-body font-semibold text-[15px] leading-none transition-colors duration-300 ${
-                onDark ? "text-white" : "text-[#1A1A12]"
-              }`}
-            >
-              Ulcare Enterprise
-            </span>
+          <Link href="/" className="flex-shrink-0 select-none leading-none">
+            <Image
+              src="/ulcare_logo.png"
+              alt="Ulcare Enterprise"
+              width={240}
+              height={80}
+              className="h-20 w-auto block m-0 p-0 border-0"
+              priority
+            />
           </Link>
 
           {/* Desktop links */}
