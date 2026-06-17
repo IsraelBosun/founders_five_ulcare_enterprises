@@ -104,6 +104,17 @@ export default function Footer() {
           <p className="font-body text-[#2D5240] text-xs">
             {siteContact.address}
           </p>
+          <p className="font-body text-[#2D5240] text-xs">
+            Built by{" "}
+            <a
+              href="http://bluehydralabs.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition-colors duration-200"
+            >
+              BLUEHYDRA
+            </a>
+          </p>
         </div>
       </div>
     </footer>
