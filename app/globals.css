@@ -92,6 +92,18 @@ body {
 .animate-slide-down { animation: slide-down 0.18s ease-out both; }
 .animate-modal-in  { animation: modal-in 0.28s cubic-bezier(0.16, 1, 0.3, 1) both; }
 .animate-backdrop-in { animation: backdrop-in 0.22s ease-out both; }
+.animate-slide-left { animation: slide-left 0.35s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-slide-up-tab { animation: slide-up-tab 0.45s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+@keyframes slide-left {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-up-tab {
+  from { opacity: 0; transform: translateY(100%); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: #EDEAE3; }

@@ -6,7 +6,9 @@ import Testimonials from "./components/Testimonials";
 import Footer from "./components/Footer";
 import WhatsAppButton from "./components/WhatsAppButton";
 import Reveal from "./components/Reveal";
-import { products, portfolio, WHATSAPP } from "./data/site";
+import { getProducts, getPortfolio, getTestimonials, getWhatsApp, getSiteSettings } from "./data/db";
+
+export const dynamic = "force-dynamic";
 
 const WA_ICON = (
   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -59,7 +61,6 @@ function WhatWeDo() {
             Pick a service. We make it elite.
           </p>
         </Reveal>
-
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {whatWeDoServices.map((svc, i) => (
             <Reveal key={svc.name} delay={i * 80}>
@@ -83,9 +84,8 @@ function WhatWeDo() {
   );
 }
 
-
-function AssetVault() {
-  const customLink = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
+function AssetVault({ products, whatsapp }) {
+  const customLink = `https://wa.me/${whatsapp}?text=${encodeURIComponent(
     "Hi Ulcare! I have a custom project request I'd like to discuss. Can we talk?"
   )}`;
 
@@ -120,61 +120,58 @@ function AssetVault() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {products.map((product, i) => (
             <Reveal key={product.id} delay={i * 70}>
-            <Link
-              href={`/products/${product.id}`}
-              className="group block border border-[#E0DDD5] hover:border-[#1A3828]/25 bg-white transition-all duration-200 h-full"
-            >
-              <div className="relative overflow-hidden bg-[#111111]" style={{ height: 160 }}>
-                {product.images[0] ? (
-                  <Image
-                    src={product.images[0]}
-                    alt={product.name}
-                    fill
-                    className="object-contain p-5"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <svg className="w-8 h-8 text-white/10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7" />
-                    </svg>
-                  </div>
-                )}
-                {product.badge && (
-                  <div
-                    className={`absolute top-3 right-3 font-body px-2.5 py-1 text-[10px] font-semibold tracking-[0.08em] uppercase ${
-                      product.badgeColor === "amber"
-                        ? "bg-[#F0B429] text-[#1A1A12]"
-                        : "bg-[#1A3828] text-white"
-                    }`}
-                  >
-                    {product.badge}
-                  </div>
-                )}
-              </div>
-
-              {/* Card body */}
-              <div className="p-4 border-t border-[#E0DDD5]">
-                <div className="font-body font-semibold text-[#1A1A12] text-sm mb-1 leading-snug">
-                  {product.name}
+              <Link
+                href={`/products/${product.id}`}
+                className="group block border border-[#E0DDD5] hover:border-[#1A3828]/25 bg-white transition-all duration-200 h-full"
+              >
+                <div className="relative overflow-hidden bg-[#111111]" style={{ height: 160 }}>
+                  {product.images[0] ? (
+                    <Image
+                      src={product.images[0]}
+                      alt={product.name}
+                      fill
+                      className="object-contain p-5"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <svg className="w-8 h-8 text-white/10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7" />
+                      </svg>
+                    </div>
+                  )}
+                  {product.badge && (
+                    <div
+                      className={`absolute top-3 right-3 font-body px-2.5 py-1 text-[10px] font-semibold tracking-[0.08em] uppercase ${
+                        product.badgeColor === "amber"
+                          ? "bg-[#F0B429] text-[#1A1A12]"
+                          : "bg-[#1A3828] text-white"
+                      }`}
+                    >
+                      {product.badge}
+                    </div>
+                  )}
                 </div>
-                <p className="font-body text-[#706D66] text-xs leading-relaxed mb-3">
-                  {product.shortDesc}
-                </p>
-                <div className="flex items-center justify-between">
-                  <span className="font-body font-bold text-[#1A1A12] text-base">
-                    ₦{product.price.toLocaleString()}
-                  </span>
-                  <span className="font-body text-xs font-semibold text-white bg-[#1A3828] group-hover:bg-[#24503A] transition-colors px-3 py-1.5">
-                    Buy
-                  </span>
+                <div className="p-4 border-t border-[#E0DDD5]">
+                  <div className="font-body font-semibold text-[#1A1A12] text-sm mb-1 leading-snug">
+                    {product.name}
+                  </div>
+                  <p className="font-body text-[#706D66] text-xs leading-relaxed mb-3">
+                    {product.shortDesc}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <span className="font-body font-bold text-[#1A1A12] text-base">
+                      ₦{product.price.toLocaleString()}
+                    </span>
+                    <span className="font-body text-xs font-semibold text-white bg-[#1A3828] group-hover:bg-[#24503A] transition-colors px-3 py-1.5">
+                      Buy
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </Link>
+              </Link>
             </Reveal>
           ))}
 
-          {/* Need custom? card */}
           <Reveal delay={products.length * 70}>
             <a
               href={customLink}
@@ -202,7 +199,7 @@ function AssetVault() {
   );
 }
 
-function Portfolio() {
+function Portfolio({ portfolio }) {
   return (
     <section className="bg-[#F7F5F0] py-20 sm:py-28 border-t border-[#E0DDD5]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -228,27 +225,29 @@ function Portfolio() {
           </div>
         </Reveal>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-1.5">
-          <Reveal className="md:row-span-2 relative overflow-hidden bg-[#111111]" style={{ minHeight: 260 }}>
-            <Image src={portfolio[0].image} alt={portfolio[0].title} fill className="object-contain p-5" sizes="(max-width: 768px) 50vw, 33vw" />
-          </Reveal>
-          <Reveal className="relative overflow-hidden bg-[#111111]" delay={80} style={{ minHeight: 180 }}>
-            <Image src={portfolio[1].image} alt={portfolio[1].title} fill className="object-contain p-5" sizes="(max-width: 768px) 50vw, 33vw" />
-          </Reveal>
-          <Reveal className="relative overflow-hidden bg-[#111111]" delay={160} style={{ minHeight: 180 }}>
-            <Image src={portfolio[3].image} alt={portfolio[3].title} fill className="object-contain p-5" sizes="(max-width: 768px) 50vw, 33vw" />
-          </Reveal>
-          <Reveal className="col-span-2 relative overflow-hidden bg-[#111111]" delay={120} style={{ minHeight: 200 }}>
-            <Image src={portfolio[2].image} alt={portfolio[2].title} fill className="object-contain p-5" sizes="(max-width: 768px) 100vw, 66vw" />
-          </Reveal>
-        </div>
+        {portfolio.length >= 4 && (
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-1.5">
+            <Reveal className="md:row-span-2 relative overflow-hidden bg-[#111111]" style={{ minHeight: 260 }}>
+              <Image src={portfolio[0].image} alt={portfolio[0].title} fill className="object-contain p-5" sizes="(max-width: 768px) 50vw, 33vw" />
+            </Reveal>
+            <Reveal className="relative overflow-hidden bg-[#111111]" delay={80} style={{ minHeight: 180 }}>
+              <Image src={portfolio[1].image} alt={portfolio[1].title} fill className="object-contain p-5" sizes="(max-width: 768px) 50vw, 33vw" />
+            </Reveal>
+            <Reveal className="relative overflow-hidden bg-[#111111]" delay={160} style={{ minHeight: 180 }}>
+              <Image src={portfolio[3].image} alt={portfolio[3].title} fill className="object-contain p-5" sizes="(max-width: 768px) 50vw, 33vw" />
+            </Reveal>
+            <Reveal className="col-span-2 relative overflow-hidden bg-[#111111]" delay={120} style={{ minHeight: 200 }}>
+              <Image src={portfolio[2].image} alt={portfolio[2].title} fill className="object-contain p-5" sizes="(max-width: 768px) 100vw, 66vw" />
+            </Reveal>
+          </div>
+        )}
       </div>
     </section>
   );
 }
 
-function CustomCTA() {
-  const waLink = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
+function CustomCTA({ whatsapp, email }) {
+  const waLink = `https://wa.me/${whatsapp}?text=${encodeURIComponent(
     "Hi Ulcare! I'd like to discuss a custom branding project. Please let me know your availability."
   )}`;
 
@@ -264,46 +263,50 @@ function CustomCTA() {
               Tell us your idea on WhatsApp. We&rsquo;ll reply in minutes with a clear quote — no jargon.
             </p>
           </Reveal>
-
           <Reveal delay={150}>
-          <div className="flex flex-col sm:flex-row gap-3">
-            <a
-              href={waLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-body inline-flex items-center justify-center gap-2.5 bg-[#22C55E] text-white font-semibold text-sm px-7 py-3.5 hover:bg-[#16A34A] transition-colors duration-200"
-            >
-              {WA_ICON}
-              Chat on WhatsApp
-            </a>
-            <a
-              href={`mailto:${
-                "ulcare.enterprise@gmail.com"
-              }`}
-              className="font-body inline-flex items-center justify-center gap-2 border border-white/20 text-white font-medium text-sm px-7 py-3.5 hover:bg-white/5 hover:border-white/35 transition-all duration-200"
-            >
-              Send email
-            </a>
-          </div>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <a
+                href={waLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-body inline-flex items-center justify-center gap-2.5 bg-[#22C55E] text-white font-semibold text-sm px-7 py-3.5 hover:bg-[#16A34A] transition-colors duration-200"
+              >
+                {WA_ICON}
+                Chat on WhatsApp
+              </a>
+              <a
+                href={`mailto:${email}`}
+                className="font-body inline-flex items-center justify-center gap-2 border border-white/20 text-white font-medium text-sm px-7 py-3.5 hover:bg-white/5 hover:border-white/35 transition-all duration-200"
+              >
+                Send email
+              </a>
+            </div>
           </Reveal>
         </div>
-
       </div>
     </section>
   );
 }
 
-export default function Home() {
+export default async function Home() {
+  const [products, portfolio, testimonials, whatsapp, settings] = await Promise.all([
+    getProducts(),
+    getPortfolio(),
+    getTestimonials(),
+    getWhatsApp(),
+    getSiteSettings(),
+  ]);
+
   return (
     <>
       <Navbar dark />
       <main>
-        <Hero />
+        <Hero whatsapp={whatsapp} />
         <WhatWeDo />
-        <AssetVault />
-        <Portfolio />
-        <Testimonials />
-        <CustomCTA />
+        <AssetVault products={products} whatsapp={whatsapp} />
+        <Portfolio portfolio={portfolio} />
+        <Testimonials testimonials={testimonials} />
+        <CustomCTA whatsapp={whatsapp} email={settings.email || "ulcare.enterprise@gmail.com"} />
       </main>
       <Footer />
       <WhatsAppButton />

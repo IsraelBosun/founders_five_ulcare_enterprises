@@ -6,15 +6,13 @@ import Footer from "../../components/Footer";
 import WhatsAppButton from "../../components/WhatsAppButton";
 import ProductPurchase from "../../components/ProductPurchase";
 import ProductGallery from "../../components/ProductGallery";
-import { products, testimonials } from "../../data/site";
+import { getProduct, getProducts, getTestimonials } from "../../data/db";
 
-export async function generateStaticParams() {
-  return products.map((p) => ({ id: String(p.id) }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
-  const product = products.find((p) => String(p.id) === id);
+  const product = await getProduct(id);
   if (!product) return {};
   return {
     title: `${product.name} — Ulcare Enterprise`,
@@ -39,19 +37,22 @@ function StarRating({ rating }) {
   );
 }
 
-
 export default async function ProductDetailPage({ params }) {
   const { id } = await params;
-  const product = products.find((p) => String(p.id) === id);
+  const [product, allProducts, testimonials] = await Promise.all([
+    getProduct(id),
+    getProducts(),
+    getTestimonials(),
+  ]);
+
   if (!product) notFound();
 
-  const related = products.filter((p) => p.id !== product.id).slice(0, 3);
+  const related = allProducts.filter((p) => p.id !== product.id).slice(0, 3);
 
   return (
     <>
       <Navbar />
       <main className="min-h-screen bg-[#F7F5F0]">
-        {/* Breadcrumb */}
         <div className="bg-white border-b border-[#E0DDD5] pt-20 sm:pt-24">
           <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4">
             <nav className="flex items-center gap-2 font-body text-sm text-[#706D66]">
@@ -72,8 +73,6 @@ export default async function ProductDetailPage({ params }) {
 
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12 sm:py-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-20 items-start">
-
-            {/* Left: Gallery */}
             <div className="lg:sticky lg:top-28">
               <ProductGallery
                 images={product.images}
@@ -82,12 +81,9 @@ export default async function ProductDetailPage({ params }) {
                 badgeColor={product.badgeColor}
               />
             </div>
-
-            {/* Right: Interactive purchase panel */}
             <ProductPurchase product={product} />
           </div>
 
-          {/* What's Inside */}
           {product.whatsInside?.length > 0 && (
             <div className="mt-20 sm:mt-24 pt-16 border-t border-[#E0DDD5]">
               <div className="font-body text-[11px] font-medium tracking-[0.22em] uppercase text-[#A09B93] mb-4">
@@ -114,7 +110,6 @@ export default async function ProductDetailPage({ params }) {
             </div>
           )}
 
-          {/* How It Works */}
           {product.steps?.length > 0 && (
             <div className="mt-16 sm:mt-20 pt-16 border-t border-[#E0DDD5]">
               <div className="font-body text-[11px] font-medium tracking-[0.22em] uppercase text-[#A09B93] mb-4">
@@ -135,7 +130,6 @@ export default async function ProductDetailPage({ params }) {
             </div>
           )}
 
-          {/* Reviews */}
           <div className="mt-16 sm:mt-20 pt-16 border-t border-[#E0DDD5]">
             <div className="font-body text-[11px] font-medium tracking-[0.22em] uppercase text-[#A09B93] mb-4">
               Reviews
@@ -144,9 +138,6 @@ export default async function ProductDetailPage({ params }) {
               <h2 className="font-body font-bold text-[#1A1A12] text-2xl sm:text-3xl">
                 {product.rating} out of 5 — {product.reviewCount} happy clients.
               </h2>
-              <button className="font-body hidden sm:inline-flex items-center text-sm font-medium text-[#706D66] border border-[#E0DDD5] px-5 py-2.5 hover:border-[#1A3828] hover:text-[#1A3828] transition-all duration-200 whitespace-nowrap">
-                Write a review
-              </button>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {testimonials.map((t) => (
@@ -169,7 +160,6 @@ export default async function ProductDetailPage({ params }) {
             </div>
           </div>
 
-          {/* Related */}
           {related.length > 0 && (
             <div className="mt-16 sm:mt-20 pt-16 border-t border-[#E0DDD5]">
               <div className="font-body text-[11px] font-medium tracking-[0.22em] uppercase text-[#A09B93] mb-4">
@@ -187,13 +177,7 @@ export default async function ProductDetailPage({ params }) {
                   >
                     <div className="relative overflow-hidden bg-[#111111]" style={{ height: 140 }}>
                       {p.images[0] ? (
-                        <Image
-                          src={p.images[0]}
-                          alt={p.name}
-                          fill
-                          className="object-contain p-4"
-                          sizes="(max-width: 640px) 100vw, 33vw"
-                        />
+                        <Image src={p.images[0]} alt={p.name} fill className="object-contain p-4" sizes="(max-width: 640px) 100vw, 33vw" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
                           <svg className="w-8 h-8 text-white/10" fill="none" stroke="currentColor" viewBox="0 0 24 24">

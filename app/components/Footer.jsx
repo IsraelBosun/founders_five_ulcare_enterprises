@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { siteContact, WHATSAPP } from "../data/site";
+import { getSiteSettings } from "../data/db";
 
 const shopLinks = [
   { label: "Branding Kit", href: "/products/1" },
@@ -15,7 +15,12 @@ const companyLinks = [
   { label: "Contact", href: "/contact" },
 ];
 
-export default function Footer() {
+export default async function Footer() {
+  const settings = await getSiteSettings();
+  const whatsapp = settings.whatsapp || "2348165078755";
+  const email = settings.email || "ulcare.enterprise@gmail.com";
+  const address = settings.address || "";
+
   return (
     <footer className="bg-[#0F2219] border-t border-[#1A3828]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
@@ -79,16 +84,15 @@ export default function Footer() {
             </h4>
             <div className="space-y-2.5">
               <a
-                href={`https://wa.me/${WHATSAPP}`}
+                href={`https://wa.me/${whatsapp}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-body block text-[#4A7A60] hover:text-[#22C55E] text-sm transition-colors duration-200"
               >
                 WhatsApp
               </a>
-
               <a
-                href={`mailto:${siteContact.email}`}
+                href={`mailto:${email}`}
                 className="font-body block text-[#4A7A60] hover:text-white text-sm transition-colors duration-200"
               >
                 Email
@@ -101,9 +105,7 @@ export default function Footer() {
           <p className="font-body text-[#2D5240] text-xs">
             © {new Date().getFullYear()} Ulcare Enterprise. All rights reserved.
           </p>
-          <p className="font-body text-[#2D5240] text-xs">
-            {siteContact.address}
-          </p>
+          <p className="font-body text-[#2D5240] text-xs">{address}</p>
           <p className="font-body text-[#2D5240] text-xs">
             Built by{" "}
             <a

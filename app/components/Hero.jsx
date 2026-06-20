@@ -1,8 +1,7 @@
 import Link from "next/link";
-import { WHATSAPP } from "../data/site";
 
-export default function Hero() {
-  const waLink = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
+export default function Hero({ whatsapp = "2348165078755" }) {
+  const waLink = `https://wa.me/${whatsapp}?text=${encodeURIComponent(
     "Hi Ulcare! I'd like to enquire about your services. Please let me know your availability."
   )}`;
 

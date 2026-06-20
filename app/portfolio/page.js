@@ -2,15 +2,19 @@ import Image from "next/image";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import WhatsAppButton from "../components/WhatsAppButton";
-import { portfolio, WHATSAPP } from "../data/site";
+import { getPortfolio, getWhatsApp } from "../data/db";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Work — Ulcare Enterprise",
   description: "Selected work — brand identity, corporate documents, and design systems for Nigerian businesses.",
 };
 
-export default function PortfolioPage() {
-  const waLink = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
+export default async function PortfolioPage() {
+  const [portfolio, whatsapp] = await Promise.all([getPortfolio(), getWhatsApp()]);
+
+  const waLink = `https://wa.me/${whatsapp}?text=${encodeURIComponent(
     "Hi Ulcare! I saw your portfolio and I'd like to commission something similar. Can we discuss?"
   )}`;
 
@@ -18,7 +22,6 @@ export default function PortfolioPage() {
     <>
       <Navbar />
       <main className="min-h-screen bg-[#F7F5F0]">
-        {/* Page header */}
         <div className="bg-[#1A3828] pt-32 pb-20 sm:pt-36 sm:pb-24">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="font-body text-[11px] font-medium tracking-[0.22em] uppercase text-[#4A7A60] mb-6">
@@ -34,7 +37,6 @@ export default function PortfolioPage() {
           </div>
         </div>
 
-        {/* Portfolio grid */}
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 sm:py-20">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
             {portfolio.map((item) => (
@@ -56,7 +58,6 @@ export default function PortfolioPage() {
                   </span>
                   <span className="font-body text-white font-medium text-base">{item.title}</span>
                 </div>
-
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#1A3828]/70 to-transparent p-5 sm:hidden">
                   <span className="font-body text-[#F0B429] text-[10px] font-medium uppercase tracking-[0.15em] block mb-1">
                     {item.category}
@@ -67,7 +68,6 @@ export default function PortfolioPage() {
             ))}
           </div>
 
-          {/* CTA */}
           <div className="mt-20 sm:mt-24 bg-[#1A3828] p-12 sm:p-16">
             <div className="max-w-lg">
               <div className="font-body text-[11px] font-medium tracking-[0.22em] uppercase text-[#4A7A60] mb-6">

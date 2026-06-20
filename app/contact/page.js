@@ -1,15 +1,21 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import WhatsAppButton from "../components/WhatsAppButton";
-import { siteContact, WHATSAPP } from "../data/site";
+import { getSiteSettings, getWhatsApp } from "../data/db";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Contact — Ulcare Enterprise",
   description: "Get in touch with Ulcare Enterprise. We respond on WhatsApp within minutes.",
 };
 
-export default function ContactPage() {
-  const waLink = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
+export default async function ContactPage() {
+  const [settings, whatsapp] = await Promise.all([getSiteSettings(), getWhatsApp()]);
+  const email = settings.email || "ulcare.enterprise@gmail.com";
+  const address = settings.address || "";
+
+  const waLink = `https://wa.me/${whatsapp}?text=${encodeURIComponent(
     "Hi Ulcare! I'd like to discuss my branding needs. Please let me know your availability."
   )}`;
 
@@ -17,7 +23,6 @@ export default function ContactPage() {
     <>
       <Navbar />
       <main className="min-h-screen bg-[#F7F5F0]">
-        {/* Page header */}
         <div className="bg-[#1A3828] pt-32 pb-20 sm:pt-36 sm:pb-24">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="font-body text-[11px] font-medium tracking-[0.22em] uppercase text-[#4A7A60] mb-6">
@@ -27,8 +32,7 @@ export default function ContactPage() {
               Let&rsquo;s work<br />together.
             </h1>
             <p className="font-body text-[#7AAF95] text-base leading-relaxed max-w-md">
-              We respond on WhatsApp within minutes. Direct conversation,
-              no waiting.
+              We respond on WhatsApp within minutes. Direct conversation, no waiting.
             </p>
           </div>
         </div>
@@ -36,7 +40,6 @@ export default function ContactPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 sm:py-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
 
-            {/* Contact methods */}
             <div className="space-y-1.5">
               <a
                 href={waLink}
@@ -54,7 +57,7 @@ export default function ContactPage() {
                     WhatsApp — Fastest response
                   </div>
                   <div className="font-body text-white font-medium text-lg group-hover:text-[#22C55E] transition-colors duration-200">
-                    +234 816 507 8755
+                    +{whatsapp.replace(/^234/, "234 ").replace(/(\d{3})(\d{4})(\d{4})$/, "$1 $2 $3")}
                   </div>
                   <div className="font-body text-[#7AAF95] text-sm mt-0.5">Responds within minutes</div>
                 </div>
@@ -64,7 +67,7 @@ export default function ContactPage() {
               </a>
 
               <a
-                href={`mailto:${siteContact.email}`}
+                href={`mailto:${email}`}
                 className="flex items-center gap-6 p-7 bg-white border border-[#E0DDD5] hover:border-[#B8862A]/35 transition-all duration-200 group"
               >
                 <div className="w-12 h-12 bg-[#F0B429]/15 flex items-center justify-center flex-shrink-0">
@@ -73,63 +76,47 @@ export default function ContactPage() {
                   </svg>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="font-body text-[10px] font-medium uppercase tracking-[0.16em] text-[#A09B93] mb-1.5">
-                    Email
-                  </div>
-                  <div className="font-body text-[#1A1A12] font-medium group-hover:text-[#F0B429] transition-colors duration-200 truncate">
-                    {siteContact.email}
-                  </div>
+                  <div className="font-body text-[10px] font-medium uppercase tracking-[0.16em] text-[#A09B93] mb-1.5">Email</div>
+                  <div className="font-body text-[#1A1A12] font-medium group-hover:text-[#F0B429] transition-colors duration-200 truncate">{email}</div>
                 </div>
                 <svg className="w-4 h-4 text-[#A09B93] group-hover:text-[#F0B429] transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
                 </svg>
               </a>
 
-              <div className="flex items-start gap-6 p-7 bg-white border border-[#E0DDD5]">
-                <div className="w-12 h-12 bg-[#F0B429]/15 flex items-center justify-center flex-shrink-0">
-                  <svg className="w-5 h-5 text-[#F0B429]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                </div>
-                <div>
-                  <div className="font-body text-[10px] font-medium uppercase tracking-[0.16em] text-[#A09B93] mb-1.5">
-                    Physical Location
+              {address && (
+                <div className="flex items-start gap-6 p-7 bg-white border border-[#E0DDD5]">
+                  <div className="w-12 h-12 bg-[#F0B429]/15 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-[#F0B429]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
                   </div>
-                  <p className="font-body text-[#1A1A12] font-medium text-sm leading-relaxed">
-                    {siteContact.address}
-                  </p>
+                  <div>
+                    <div className="font-body text-[10px] font-medium uppercase tracking-[0.16em] text-[#A09B93] mb-1.5">Physical Location</div>
+                    <p className="font-body text-[#1A1A12] font-medium text-sm leading-relaxed">{address}</p>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
-            {/* Right panel */}
             <div className="bg-[#1A3828] p-10 sm:p-12">
               <div className="font-body text-[11px] font-medium tracking-[0.22em] uppercase text-[#4A7A60] mb-6">
                 Start a Project
               </div>
-              <h2 className="font-body font-bold text-white text-3xl sm:text-4xl mb-4">
-                Ready to start?
-              </h2>
+              <h2 className="font-body font-bold text-white text-3xl sm:text-4xl mb-4">Ready to start?</h2>
               <p className="font-body text-[#7AAF95] text-base leading-relaxed mb-10">
                 Tell us what you need and we&rsquo;ll respond with a clear plan,
                 timeline, and price. No pressure, no commitment.
               </p>
-
               <div className="space-y-4 mb-10 border-t border-[#2D5240] pt-8">
-                {[
-                  "Response within minutes",
-                  "No upfront payment required",
-                  "Professional results, guaranteed",
-                  "Delivered straight to WhatsApp",
-                ].map((item) => (
+                {["Response within minutes", "No upfront payment required", "Professional results, guaranteed", "Delivered straight to WhatsApp"].map((item) => (
                   <div key={item} className="flex items-center gap-3">
                     <div className="w-1.5 h-1.5 bg-[#F0B429] flex-shrink-0 rounded-full" />
                     <span className="font-body text-[#7AAF95] text-sm">{item}</span>
                   </div>
                 ))}
               </div>
-
               <a
                 href={waLink}
                 target="_blank"

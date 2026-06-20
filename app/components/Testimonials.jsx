@@ -1,6 +1,4 @@
-import { testimonials } from "../data/site";
-
-export default function Testimonials() {
+export default function Testimonials({ testimonials = [] }) {
   return (
     <section className="bg-[#F7F5F0] py-20 sm:py-28 border-t border-[#E0DDD5]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
