@@ -40,7 +40,7 @@ export default function Navbar({ dark = false }) {
               alt="Ulcare Enterprise"
               width={200}
               height={72}
-              className="h-14 md:h-20 w-auto block"
+              className="h-10 md:h-14 w-auto block"
               priority
             />
           </Link>
