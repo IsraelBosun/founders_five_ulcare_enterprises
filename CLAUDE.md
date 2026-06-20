@@ -17,22 +17,39 @@ No linter or test runner is configured.
 - **Next.js 16** (App Router, no Pages Router)
 - **React 19**
 - **Tailwind CSS v4** — config-less, uses `@theme` in `globals.css` instead of `tailwind.config.js`
-- No external UI library, no state management library, no database
+- **Supabase** — PostgreSQL DB, Auth (email/password), Storage (`ulcare-images` bucket)
+- **Vercel Analytics** — `<Analytics />` in root layout
 
 ## Architecture
 
 ### Data layer
-All site content lives in `app/data/site.js` — products, portfolio items, testimonials, contact info, and the WhatsApp number. There is no CMS or API; to update prices, copy, or add products, edit this file directly. The `wa()` helper in that file pre-builds WhatsApp deep-link URLs for each product.
+All site content is stored in **Supabase** and fetched at request time. `app/data/site.js` is legacy — do not edit it. Use `app/data/db.js` instead, which exports:
+- `getProducts()`, `getProduct(id)`, `getPortfolio()`, `getTestimonials()`, `getSiteSettings()`, `getWhatsApp()`
+
+All public pages use `export const dynamic = "force-dynamic"` so changes in the DB appear immediately without a redeploy.
 
 ### Routing
 ```
-/              → app/page.js          (home, server component)
-/products      → app/products/page.js (listing, server component)
-/products/[id] → app/products/[id]/page.js (detail, server component)
+/              → app/page.js                          (home)
+/products      → app/products/page.js                 (listing)
+/products/[id] → app/products/[id]/page.js            (detail, no generateStaticParams)
 /portfolio     → app/portfolio/page.js
 /contact       → app/contact/page.js
+/admin         → app/admin/page.js                    (login)
+/admin/dashboard         → app/admin/dashboard/page.js
+/admin/dashboard/products        → product list/add/edit
+/admin/dashboard/portfolio       → portfolio manage
+/admin/dashboard/testimonials    → testimonials manage
+/admin/dashboard/settings        → WhatsApp, email, address
 ```
-`generateStaticParams` in the `[id]` route makes product detail pages statically generated at build time.
+
+### Admin panel
+- Protected by `proxy.js` (Next.js 16 middleware — export must be named `proxy`, not `middleware`)
+- Login via Supabase Auth (email/password); create the admin user in Supabase dashboard
+- Server actions live in `app/admin/actions/` (products, portfolio, testimonials, settings, auth)
+- `DeleteButton.jsx` always shows a confirm dialog before deleting
+- `ImageUpload.jsx` uploads to Supabase Storage bucket `ulcare-images` (must be public)
+- Admin sidebar is responsive: fixed left drawer on desktop, top header + bottom tab bar on mobile
 
 ### Server vs client components
 Most pages are server components. Client components (`"use client"`) are isolated to:
