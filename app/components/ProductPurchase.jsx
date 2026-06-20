@@ -27,7 +27,9 @@ function StarRating({ rating }) {
 export default function ProductPurchase({ product }) {
   const [selectedPackage, setSelectedPackage] = useState(0);
 
-  const activePrice = product.packages
+  const hasPackages = product.packages?.length > 0;
+
+  const activePrice = hasPackages
     ? product.packages[selectedPackage].price
     : product.price;
 
@@ -35,7 +37,7 @@ export default function ProductPurchase({ product }) {
     ? Math.round((1 - product.price / product.originalPrice) * 100)
     : null;
 
-  const waLink = product.packages
+  const waLink = hasPackages
     ? `https://wa.me/${product.whatsappLink.split("wa.me/")[1].split("?")[0]}?text=${encodeURIComponent(
         `Hi Ulcare! I'd like to order the *${product.name}* — *${product.packages[selectedPackage].name} package* (₦${product.packages[selectedPackage].price.toLocaleString()}). Please let me know how to proceed. 🙏`
       )}`
@@ -103,7 +105,7 @@ export default function ProductPurchase({ product }) {
       </p>
 
       {/* Package selector */}
-      {product.packages && (
+      {hasPackages && (
         <div>
           <p className="font-body text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1A1A12] mb-3">
             Choose your package
