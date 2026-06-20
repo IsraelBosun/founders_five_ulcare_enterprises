@@ -28,28 +28,28 @@ export default async function AdminProductsPage() {
         </Link>
       </div>
 
-      <div className="bg-white border border-gray-200 overflow-hidden">
-        <table className="w-full text-sm font-body">
+      <div className="bg-white border border-gray-200 overflow-x-auto">
+        <table className="w-full text-sm font-body min-w-[420px]">
           <thead>
             <tr className="border-b border-gray-100 text-left">
-              <th className="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Product</th>
-              <th className="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide hidden sm:table-cell">Category</th>
-              <th className="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Price</th>
-              <th className="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide hidden md:table-cell">Type</th>
-              <th className="px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Actions</th>
+              <th className="px-3 sm:px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Product</th>
+              <th className="px-3 sm:px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide hidden sm:table-cell">Category</th>
+              <th className="px-3 sm:px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Price</th>
+              <th className="px-3 sm:px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide hidden md:table-cell">Type</th>
+              <th className="px-3 sm:px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-50">
             {(products || []).map((p) => (
               <tr key={p.id} className="hover:bg-gray-50 transition-colors">
-                <td className="px-5 py-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-[#111111] flex-shrink-0 overflow-hidden relative">
+                <td className="px-3 sm:px-5 py-3 sm:py-4">
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="w-9 h-9 bg-[#111111] flex-shrink-0 overflow-hidden relative">
                       {p.images?.[0] ? (
                         p.images[0].startsWith("http") ? (
                           <img src={p.images[0]} alt="" className="w-full h-full object-contain p-1" />
                         ) : (
-                          <Image src={p.images[0]} alt="" fill className="object-contain p-1" sizes="40px" />
+                          <Image src={p.images[0]} alt="" fill className="object-contain p-1" sizes="36px" />
                         )
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
@@ -59,28 +59,28 @@ export default async function AdminProductsPage() {
                         </div>
                       )}
                     </div>
-                    <div>
-                      <div className="font-medium text-gray-900 text-sm">{p.name}</div>
+                    <div className="min-w-0">
+                      <div className="font-medium text-gray-900 text-sm truncate max-w-[140px] sm:max-w-none">{p.name}</div>
                       {p.badge && (
                         <span className="text-[10px] text-gray-400">{p.badge}</span>
                       )}
                     </div>
                   </div>
                 </td>
-                <td className="px-5 py-4 text-gray-500 hidden sm:table-cell">{p.category}</td>
-                <td className="px-5 py-4 font-medium text-gray-900">₦{Number(p.price).toLocaleString()}</td>
-                <td className="px-5 py-4 hidden md:table-cell">
+                <td className="px-3 sm:px-5 py-3 sm:py-4 text-gray-500 hidden sm:table-cell">{p.category}</td>
+                <td className="px-3 sm:px-5 py-3 sm:py-4 font-medium text-gray-900 whitespace-nowrap">₦{Number(p.price).toLocaleString()}</td>
+                <td className="px-3 sm:px-5 py-3 sm:py-4 hidden md:table-cell">
                   <span className={`text-[10px] font-semibold px-2 py-0.5 uppercase tracking-wide ${
                     p.type === "download" ? "bg-[#F0B429]/15 text-[#8B6B00]" : "bg-[#1A3828]/10 text-[#1A3828]"
                   }`}>
                     {p.type}
                   </span>
                 </td>
-                <td className="px-5 py-4">
-                  <div className="flex items-center gap-4">
+                <td className="px-3 sm:px-5 py-3 sm:py-4">
+                  <div className="flex items-center gap-3">
                     <Link
                       href={`/admin/dashboard/products/${p.id}`}
-                      className="text-xs font-medium text-[#1A3828] hover:underline"
+                      className="text-xs font-medium text-[#1A3828] hover:underline whitespace-nowrap"
                     >
                       Edit
                     </Link>
