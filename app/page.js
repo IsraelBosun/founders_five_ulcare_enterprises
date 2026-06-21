@@ -6,7 +6,7 @@ import Testimonials from "./components/Testimonials";
 import Footer from "./components/Footer";
 import WhatsAppButton from "./components/WhatsAppButton";
 import Reveal from "./components/Reveal";
-import { getProducts, getPortfolio, getTestimonials, getWhatsApp, getSiteSettings } from "./data/db";
+import { getProducts, getPortfolio, getTestimonials, getPageContent } from "./data/db";
 
 export const dynamic = "force-dynamic";
 
@@ -16,60 +16,49 @@ const WA_ICON = (
   </svg>
 );
 
-const serviceIcons = {
-  Branding: (
-    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
-    </svg>
-  ),
-  "CV & Profile": (
-    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-    </svg>
-  ),
-  Flyers: (
-    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-    </svg>
-  ),
-  Templates: (
-    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z" />
-    </svg>
-  ),
-};
-
-const whatWeDoServices = [
-  { name: "Branding", desc: "Logo + identity" },
-  { name: "CV & Profile", desc: "Career upgrade" },
-  { name: "Flyers", desc: "High-converting" },
-  { name: "Templates", desc: "Instant download" },
+// Icons ordered by card position (index-based, not name-based)
+const SERVICE_ICONS = [
+  // Branding
+  <svg key="branding" className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+  </svg>,
+  // CV & Profile
+  <svg key="cv" className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+  </svg>,
+  // Flyers
+  <svg key="flyers" className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+  </svg>,
+  // Templates
+  <svg key="templates" className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z" />
+  </svg>,
 ];
 
-function WhatWeDo() {
+function WhatWeDo({ content }) {
+  const { label, title, subtitle, services } = content;
   return (
     <section className="bg-[#F7F5F0] py-20 sm:py-28">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <Reveal>
           <div className="font-body text-[11px] font-medium tracking-[0.22em] uppercase text-[#A09B93] mb-4">
-            What We Do
+            {label}
           </div>
           <h2 className="font-body font-bold text-[#1A1A12] text-3xl sm:text-4xl mb-3">
-            Everything your brand needs.
+            {title}
           </h2>
-          <p className="font-body text-[#706D66] text-base mb-12">
-            Pick a service. We make it elite.
-          </p>
+          <p className="font-body text-[#706D66] text-base mb-12">{subtitle}</p>
         </Reveal>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {whatWeDoServices.map((svc, i) => (
-            <Reveal key={svc.name} delay={i * 80}>
+          {services.map((svc, i) => (
+            <Reveal key={i} delay={i * 80}>
               <Link
                 href="/products"
                 className="group bg-white border border-[#E0DDD5] hover:border-[#1A3828]/30 p-5 transition-all duration-200 flex flex-col gap-4 h-full"
               >
                 <div className="w-10 h-10 bg-[#1A3828] flex items-center justify-center rounded-sm group-hover:bg-[#24503A] transition-colors duration-200">
-                  {serviceIcons[svc.name]}
+                  {SERVICE_ICONS[i]}
                 </div>
                 <div>
                   <div className="font-body font-semibold text-[#1A1A12] text-sm mb-1">{svc.name}</div>
@@ -84,10 +73,9 @@ function WhatWeDo() {
   );
 }
 
-function AssetVault({ products, whatsapp }) {
-  const customLink = `https://wa.me/${whatsapp}?text=${encodeURIComponent(
-    "Hi Ulcare! I have a custom project request I'd like to discuss. Can we talk?"
-  )}`;
+function AssetVault({ products, whatsapp, content }) {
+  const { label, title, subtitle, customTitle, customText, customWa } = content;
+  const customLink = `https://wa.me/${whatsapp}?text=${encodeURIComponent(customWa)}`;
 
   return (
     <section className="bg-white py-20 sm:py-28 border-t border-[#E0DDD5]">
@@ -96,14 +84,10 @@ function AssetVault({ products, whatsapp }) {
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
             <div>
               <div className="font-body text-[11px] font-medium tracking-[0.22em] uppercase text-[#A09B93] mb-4">
-                The Asset Vault
+                {label}
               </div>
-              <h2 className="font-body font-bold text-[#1A1A12] text-3xl sm:text-4xl mb-2">
-                Buy. Download. Done.
-              </h2>
-              <p className="font-body text-[#706D66] text-sm">
-                Premium templates ready in under 60 seconds.
-              </p>
+              <h2 className="font-body font-bold text-[#1A1A12] text-3xl sm:text-4xl mb-2">{title}</h2>
+              <p className="font-body text-[#706D66] text-sm">{subtitle}</p>
             </div>
             <Link
               href="/products"
@@ -179,12 +163,8 @@ function AssetVault({ products, whatsapp }) {
               rel="noopener noreferrer"
               className="group border border-[#E0DDD5] hover:border-[#F0B429]/50 bg-[#F0B429]/8 transition-all duration-200 flex flex-col items-start justify-center p-8 gap-3 min-h-[220px] h-full"
             >
-              <div className="font-body font-bold text-[#1A1A12] text-lg leading-snug">
-                Need custom?
-              </div>
-              <p className="font-body text-[#706D66] text-sm leading-relaxed">
-                Tell us what you want. We&rsquo;ll build it.
-              </p>
+              <div className="font-body font-bold text-[#1A1A12] text-lg leading-snug">{customTitle}</div>
+              <p className="font-body text-[#706D66] text-sm leading-relaxed">{customText}</p>
               <span className="font-body text-sm font-semibold text-[#1A3828] flex items-center gap-1.5 group-hover:gap-2.5 transition-all duration-200">
                 Start a project
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -199,7 +179,8 @@ function AssetVault({ products, whatsapp }) {
   );
 }
 
-function Portfolio({ portfolio }) {
+function Portfolio({ portfolio, content }) {
+  const { label, title } = content;
   return (
     <section className="bg-[#F7F5F0] py-20 sm:py-28 border-t border-[#E0DDD5]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -207,11 +188,9 @@ function Portfolio({ portfolio }) {
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
             <div>
               <div className="font-body text-[11px] font-medium tracking-[0.22em] uppercase text-[#A09B93] mb-4">
-                Portfolio
+                {label}
               </div>
-              <h2 className="font-body font-bold text-[#1A1A12] text-3xl sm:text-4xl">
-                A look at our work.
-              </h2>
+              <h2 className="font-body font-bold text-[#1A1A12] text-3xl sm:text-4xl">{title}</h2>
             </div>
             <Link
               href="/portfolio"
@@ -246,22 +225,17 @@ function Portfolio({ portfolio }) {
   );
 }
 
-function CustomCTA({ whatsapp, email }) {
-  const waLink = `https://wa.me/${whatsapp}?text=${encodeURIComponent(
-    "Hi Ulcare! I'd like to discuss a custom branding project. Please let me know your availability."
-  )}`;
+function CustomCTA({ whatsapp, email, content }) {
+  const { title, text, waMessage } = content;
+  const waLink = `https://wa.me/${whatsapp}?text=${encodeURIComponent(waMessage)}`;
 
   return (
     <section className="bg-[#1A3828] py-16 sm:py-20">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           <Reveal>
-            <h2 className="font-body font-bold text-white text-3xl sm:text-4xl mb-4">
-              Want something custom?
-            </h2>
-            <p className="font-body text-[#7AAF95] text-base leading-relaxed">
-              Tell us your idea on WhatsApp. We&rsquo;ll reply in minutes with a clear quote — no jargon.
-            </p>
+            <h2 className="font-body font-bold text-white text-3xl sm:text-4xl mb-4">{title}</h2>
+            <p className="font-body text-[#7AAF95] text-base leading-relaxed">{text}</p>
           </Reveal>
           <Reveal delay={150}>
             <div className="flex flex-col sm:flex-row gap-3">
@@ -289,24 +263,23 @@ function CustomCTA({ whatsapp, email }) {
 }
 
 export default async function Home() {
-  const [products, portfolio, testimonials, whatsapp, settings] = await Promise.all([
+  const [products, portfolio, testimonials, content] = await Promise.all([
     getProducts(),
     getPortfolio(),
     getTestimonials(),
-    getWhatsApp(),
-    getSiteSettings(),
+    getPageContent(),
   ]);
 
   return (
     <>
       <Navbar dark />
       <main>
-        <Hero whatsapp={whatsapp} />
-        <WhatWeDo />
-        <AssetVault products={products} whatsapp={whatsapp} />
-        <Portfolio portfolio={portfolio} />
+        <Hero whatsapp={content.whatsapp} content={content.hero} />
+        <WhatWeDo content={content.whatWeDo} />
+        <AssetVault products={products} whatsapp={content.whatsapp} content={content.vault} />
+        <Portfolio portfolio={portfolio} content={content.homePortfolio} />
         <Testimonials testimonials={testimonials} />
-        <CustomCTA whatsapp={whatsapp} email={settings.email || "ulcare.enterprise@gmail.com"} />
+        <CustomCTA whatsapp={content.whatsapp} email={content.email} content={content.cta} />
       </main>
       <Footer />
       <WhatsAppButton />

@@ -3,7 +3,7 @@ import Link from "next/link";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import WhatsAppButton from "../components/WhatsAppButton";
-import { getProducts, getWhatsApp } from "../data/db";
+import { getProducts, getPageContent } from "../data/db";
 
 export const dynamic = "force-dynamic";
 
@@ -13,14 +13,13 @@ export const metadata = {
 };
 
 export default async function ProductsPage() {
-  const [products, whatsapp] = await Promise.all([getProducts(), getWhatsApp()]);
+  const [products, content] = await Promise.all([getProducts(), getPageContent()]);
+  const { whatsapp, shop } = content;
 
   const services = products.filter((p) => p.type === "service");
   const downloads = products.filter((p) => p.type === "download");
 
-  const customLink = `https://wa.me/${whatsapp}?text=${encodeURIComponent(
-    "Hi Ulcare! I have a custom project request I'd like to discuss. Can we talk?"
-  )}`;
+  const customLink = `https://wa.me/${whatsapp}?text=${encodeURIComponent(shop.ctaWa)}`;
 
   return (
     <>
@@ -29,13 +28,13 @@ export default async function ProductsPage() {
         <div className="bg-[#1A3828] pt-32 pb-20 sm:pt-36 sm:pb-24">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="font-body text-[11px] font-medium tracking-[0.22em] uppercase text-[#4A7A60] mb-6">
-              The Asset Vault
+              {shop.heroLabel}
             </div>
             <h1 className="font-body font-extrabold text-white text-5xl sm:text-6xl leading-tight mb-4 max-w-2xl">
-              Buy. Download. Done.
+              {shop.heroTitle}
             </h1>
             <p className="font-body text-[#7AAF95] text-base leading-relaxed max-w-md">
-              Premium templates and services — ready to use in under 60 seconds.
+              {shop.heroSubtitle}
             </p>
           </div>
         </div>
@@ -47,14 +46,14 @@ export default async function ProductsPage() {
             <div className="mb-10 pb-6 border-b border-[#E0DDD5] flex items-end justify-between gap-4">
               <div>
                 <div className="font-body text-[11px] font-medium tracking-[0.22em] uppercase text-[#A09B93] mb-3">
-                  Custom Services
+                  {shop.servicesLabel}
                 </div>
                 <h2 className="font-body font-bold text-[#1A1A12] text-3xl sm:text-4xl">
-                  We design it for you.
+                  {shop.servicesTitle}
                 </h2>
               </div>
               <p className="font-body text-sm text-[#A09B93] hidden sm:block max-w-xs text-right leading-relaxed">
-                Delivered to your WhatsApp within 24–72 hours.
+                {shop.servicesSubtitle}
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -113,14 +112,14 @@ export default async function ProductsPage() {
               <div className="mb-10 pb-6 border-b border-[#E0DDD5] flex items-end justify-between gap-4">
                 <div>
                   <div className="font-body text-[11px] font-medium tracking-[0.22em] uppercase text-[#A09B93] mb-3">
-                    Instant Downloads
+                    {shop.downloadsLabel}
                   </div>
                   <h2 className="font-body font-bold text-[#1A1A12] text-3xl sm:text-4xl">
-                    Buy once, use forever.
+                    {shop.downloadsTitle}
                   </h2>
                 </div>
                 <p className="font-body text-sm text-[#A09B93] hidden sm:block max-w-xs text-right leading-relaxed">
-                  Delivered immediately after payment.
+                  {shop.downloadsSubtitle}
                 </p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
@@ -172,10 +171,8 @@ export default async function ProductsPage() {
           <div className="bg-[#1A3828] p-10 sm:p-14">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
               <div className="max-w-lg">
-                <h3 className="font-body font-bold text-white text-2xl sm:text-3xl mb-3">Need custom?</h3>
-                <p className="font-body text-[#7AAF95] text-base leading-relaxed">
-                  Tell us what you want. We&rsquo;ll build it — no jargon, just results.
-                </p>
+                <h3 className="font-body font-bold text-white text-2xl sm:text-3xl mb-3">{shop.ctaTitle}</h3>
+                <p className="font-body text-[#7AAF95] text-base leading-relaxed">{shop.ctaText}</p>
               </div>
               <a
                 href={customLink}

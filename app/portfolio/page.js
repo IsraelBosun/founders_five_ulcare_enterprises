@@ -2,7 +2,7 @@ import Image from "next/image";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import WhatsAppButton from "../components/WhatsAppButton";
-import { getPortfolio, getWhatsApp } from "../data/db";
+import { getPortfolio, getPageContent } from "../data/db";
 
 export const dynamic = "force-dynamic";
 
@@ -12,11 +12,10 @@ export const metadata = {
 };
 
 export default async function PortfolioPage() {
-  const [portfolio, whatsapp] = await Promise.all([getPortfolio(), getWhatsApp()]);
+  const [portfolio, content] = await Promise.all([getPortfolio(), getPageContent()]);
+  const { whatsapp, portfolio: pc } = content;
 
-  const waLink = `https://wa.me/${whatsapp}?text=${encodeURIComponent(
-    "Hi Ulcare! I saw your portfolio and I'd like to commission something similar. Can we discuss?"
-  )}`;
+  const waLink = `https://wa.me/${whatsapp}?text=${encodeURIComponent(pc.ctaWa)}`;
 
   return (
     <>
@@ -25,14 +24,13 @@ export default async function PortfolioPage() {
         <div className="bg-[#1A3828] pt-32 pb-20 sm:pt-36 sm:pb-24">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="font-body text-[11px] font-medium tracking-[0.22em] uppercase text-[#4A7A60] mb-6">
-              Portfolio
+              {pc.heroLabel}
             </div>
             <h1 className="font-body font-extrabold text-white text-5xl sm:text-6xl leading-tight max-w-2xl mb-4">
-              A look at our work.
+              {pc.heroTitle}
             </h1>
             <p className="font-body text-[#7AAF95] text-base leading-relaxed max-w-md">
-              Every piece is built with precision — professional quality that makes
-              your business look exactly as serious as it is.
+              {pc.heroSubtitle}
             </p>
           </div>
         </div>
@@ -71,14 +69,13 @@ export default async function PortfolioPage() {
           <div className="mt-20 sm:mt-24 bg-[#1A3828] p-12 sm:p-16">
             <div className="max-w-lg">
               <div className="font-body text-[11px] font-medium tracking-[0.22em] uppercase text-[#4A7A60] mb-6">
-                Commission Work
+                {pc.ctaLabel}
               </div>
               <h2 className="font-body font-bold text-white text-3xl sm:text-4xl mb-4">
-                Want something like this?
+                {pc.ctaTitle}
               </h2>
               <p className="font-body text-[#7AAF95] text-base leading-relaxed mb-10">
-                Tell us what you need and we&rsquo;ll get back to you within
-                minutes on WhatsApp. No long forms, no waiting.
+                {pc.ctaText}
               </p>
               <a
                 href={waLink}

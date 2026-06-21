@@ -1,7 +1,7 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import WhatsAppButton from "../components/WhatsAppButton";
-import { getSiteSettings, getWhatsApp } from "../data/db";
+import { getPageContent } from "../data/db";
 
 export const dynamic = "force-dynamic";
 
@@ -11,13 +11,10 @@ export const metadata = {
 };
 
 export default async function ContactPage() {
-  const [settings, whatsapp] = await Promise.all([getSiteSettings(), getWhatsApp()]);
-  const email = settings.email || "ulcare.enterprise@gmail.com";
-  const address = settings.address || "";
+  const content = await getPageContent();
+  const { whatsapp, email, contact } = content;
 
-  const waLink = `https://wa.me/${whatsapp}?text=${encodeURIComponent(
-    "Hi Ulcare! I'd like to discuss my branding needs. Please let me know your availability."
-  )}`;
+  const waLink = `https://wa.me/${whatsapp}?text=${encodeURIComponent(contact.waMessage)}`;
 
   return (
     <>
@@ -26,13 +23,13 @@ export default async function ContactPage() {
         <div className="bg-[#1A3828] pt-32 pb-20 sm:pt-36 sm:pb-24">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="font-body text-[11px] font-medium tracking-[0.22em] uppercase text-[#4A7A60] mb-6">
-              Contact
+              {contact.heroLabel}
             </div>
             <h1 className="font-body font-extrabold text-white text-5xl sm:text-6xl leading-tight max-w-xl mb-4">
-              Let&rsquo;s work<br />together.
+              {contact.heroTitle}
             </h1>
             <p className="font-body text-[#7AAF95] text-base leading-relaxed max-w-md">
-              We respond on WhatsApp within minutes. Direct conversation, no waiting.
+              {contact.heroSubtitle}
             </p>
           </div>
         </div>
@@ -84,7 +81,7 @@ export default async function ContactPage() {
                 </svg>
               </a>
 
-              {address && (
+              {content.address && (
                 <div className="flex items-start gap-6 p-7 bg-white border border-[#E0DDD5]">
                   <div className="w-12 h-12 bg-[#F0B429]/15 flex items-center justify-center flex-shrink-0">
                     <svg className="w-5 h-5 text-[#F0B429]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -94,7 +91,7 @@ export default async function ContactPage() {
                   </div>
                   <div>
                     <div className="font-body text-[10px] font-medium uppercase tracking-[0.16em] text-[#A09B93] mb-1.5">Physical Location</div>
-                    <p className="font-body text-[#1A1A12] font-medium text-sm leading-relaxed">{address}</p>
+                    <p className="font-body text-[#1A1A12] font-medium text-sm leading-relaxed">{content.address}</p>
                   </div>
                 </div>
               )}
@@ -102,15 +99,16 @@ export default async function ContactPage() {
 
             <div className="bg-[#1A3828] p-10 sm:p-12">
               <div className="font-body text-[11px] font-medium tracking-[0.22em] uppercase text-[#4A7A60] mb-6">
-                Start a Project
+                {contact.panelLabel}
               </div>
-              <h2 className="font-body font-bold text-white text-3xl sm:text-4xl mb-4">Ready to start?</h2>
+              <h2 className="font-body font-bold text-white text-3xl sm:text-4xl mb-4">
+                {contact.panelTitle}
+              </h2>
               <p className="font-body text-[#7AAF95] text-base leading-relaxed mb-10">
-                Tell us what you need and we&rsquo;ll respond with a clear plan,
-                timeline, and price. No pressure, no commitment.
+                {contact.panelText}
               </p>
               <div className="space-y-4 mb-10 border-t border-[#2D5240] pt-8">
-                {["Response within minutes", "No upfront payment required", "Professional results, guaranteed", "Delivered straight to WhatsApp"].map((item) => (
+                {contact.promises.map((item) => (
                   <div key={item} className="flex items-center gap-3">
                     <div className="w-1.5 h-1.5 bg-[#F0B429] flex-shrink-0 rounded-full" />
                     <span className="font-body text-[#7AAF95] text-sm">{item}</span>

@@ -1,20 +1,28 @@
 import Link from "next/link";
 
-export default function Hero({ whatsapp = "2348165078755" }) {
-  const waLink = `https://wa.me/${whatsapp}?text=${encodeURIComponent(
-    "Hi Ulcare! I'd like to enquire about your services. Please let me know your availability."
-  )}`;
+export default function Hero({ whatsapp = "2348165078755", content = {} }) {
+  const {
+    headline = "Elite branding,\nmade simple.",
+    subtext = "World-class logos, CVs and business templates. No jargon. Buy in seconds — or order custom.",
+    cities = ["Port Harcourt", "Abuja", "Lagos"],
+    stats = [
+      { v: "500+", l: "Brands served" },
+      { v: "60s", l: "Avg. download" },
+      { v: "24/7", l: "WhatsApp" },
+    ],
+    waMessage = "Hi Ulcare! I'd like to enquire about your services. Please let me know your availability.",
+  } = content;
+
+  const waLink = `https://wa.me/${whatsapp}?text=${encodeURIComponent(waMessage)}`;
 
   return (
     <section className="relative bg-[#1A3828] min-h-screen flex flex-col justify-center overflow-hidden pt-20 pb-16">
-      {/* Subtle radial glow */}
       <div
         className="absolute top-0 right-0 w-[700px] h-[700px] pointer-events-none"
         style={{
           background: "radial-gradient(ellipse at 80% 10%, rgba(240,180,41,0.07) 0%, transparent 60%)",
         }}
       />
-      {/* Fine dot grid */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.04]"
         style={{
@@ -24,9 +32,8 @@ export default function Hero({ whatsapp = "2348165078755" }) {
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full">
-        {/* Location pills */}
         <div className="flex flex-wrap gap-2 mb-10 animate-fade-up">
-          {["Port Harcourt", "Abuja", "Lagos"].map((city) => (
+          {cities.map((city) => (
             <span
               key={city}
               className="font-body text-[11px] font-medium px-3 py-1 rounded-full border border-[#F0B429]/30 text-[#F0B429] bg-[#F0B429]/8"
@@ -36,20 +43,17 @@ export default function Hero({ whatsapp = "2348165078755" }) {
           ))}
         </div>
 
-        {/* Headline */}
         <h1
           className="font-body font-extrabold text-white leading-[1.0] tracking-tight mb-6 animate-fade-up-1 max-w-2xl"
-          style={{ fontSize: "clamp(44px, 7vw, 80px)" }}
+          style={{ fontSize: "clamp(44px, 7vw, 80px)", whiteSpace: "pre-line" }}
         >
-          Elite branding,<br />made simple.
+          {headline}
         </h1>
 
-        {/* Subtext */}
         <p className="font-body text-[#7AAF95] text-base sm:text-[17px] leading-relaxed max-w-[440px] mb-10 animate-fade-up-2">
-          World-class logos, CVs and business templates. No jargon. Buy in seconds — or order custom.
+          {subtext}
         </p>
 
-        {/* CTAs */}
         <div className="flex flex-col sm:flex-row gap-3 mb-16 animate-fade-up-3">
           <Link
             href="/products"
@@ -68,16 +72,13 @@ export default function Hero({ whatsapp = "2348165078755" }) {
           </Link>
         </div>
 
-        {/* Stats */}
         <div className="flex flex-wrap items-center gap-10 pt-8 border-t border-white/10 animate-fade-up-3">
-          {[
-            { v: "500+", l: "Brands served" },
-            { v: "60s", l: "Avg. download" },
-            { v: "24/7", l: "WhatsApp" },
-          ].map((s) => (
+          {stats.map((s) => (
             <div key={s.l}>
               <div className="font-body font-bold text-white text-2xl leading-none mb-1">{s.v}</div>
-              <div className="font-body text-[#7AAF95] text-[11px] font-medium uppercase tracking-[0.12em]">{s.l}</div>
+              <div className="font-body text-[#7AAF95] text-[11px] font-medium uppercase tracking-[0.12em]">
+                {s.l}
+              </div>
             </div>
           ))}
         </div>

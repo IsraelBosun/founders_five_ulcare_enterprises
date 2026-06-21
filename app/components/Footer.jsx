@@ -20,6 +20,7 @@ export default async function Footer() {
   const whatsapp = settings.whatsapp || "2348165078755";
   const email = settings.email || "ulcare.enterprise@gmail.com";
   const address = settings.address || "";
+  const tagline = settings.footer_tagline || "Elite branding and corporate documentation, made simple.";
 
   return (
     <footer className="bg-[#0F2219] border-t border-[#1A3828]">
@@ -37,7 +38,7 @@ export default async function Footer() {
               />
             </Link>
             <p className="font-body text-[#4A7A60] text-sm leading-relaxed max-w-[220px]">
-              Elite branding and corporate documentation, made simple.
+              {tagline}
             </p>
           </div>
 
