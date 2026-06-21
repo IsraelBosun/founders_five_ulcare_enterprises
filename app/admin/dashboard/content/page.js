@@ -610,13 +610,13 @@ export default function ContentPage() {
       </p>
 
       {/* Tab bar */}
-      <div className="flex overflow-x-auto mb-8 border-b border-gray-200 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <div className="grid grid-cols-3 sm:flex mb-8 border-b border-gray-200">
         {TABS.map((tab) => (
           <button
             key={tab}
             type="button"
             onClick={() => setActiveTab(tab)}
-            className={`font-body text-sm font-medium px-4 py-2.5 border-b-2 -mb-px transition-colors duration-150 whitespace-nowrap flex-shrink-0 ${
+            className={`font-body text-sm font-medium px-2 sm:px-4 py-2.5 border-b-2 -mb-px transition-colors duration-150 text-center sm:text-left ${
               activeTab === tab
                 ? "border-[#1A3828] text-[#1A3828]"
                 : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
